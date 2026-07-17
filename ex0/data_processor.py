@@ -103,30 +103,28 @@ if __name__ == "__main__":
     text_p = TextProcessor()
     log_p = LogProcessor()
     print("\n======= NumericProcessor\n")
-    nums = list[int | float]
-    for data in [12.9, 10, 123, "hello"]:
-        print(f"validating '{data}':{num_p.validate(data)}")
-        try:
-            num_p.ingest(data)  # error because of str
-        except Exception as e:
-            print(f"Got Exception: {e}")
+    print(f"Trying to validate input '42':{num_p.validate(42)}")
+    print(f"Trying to validate input 'Hello':{num_p.validate("Hello")}")
+    nums = [1, 2, 3, 4, 5]
+    try:
+        num_p.ingest("foo") # error because of str
+    except Exception as e:
+        print(f"Got Exception: {e}")
+    num_p.ingest(nums)
     num_p.output()
     num_p.output()
     num_p.output()
     print("\n======= TextProcessor\n")
-    data_text = ["hi", "brother"]
-    print(f"validating '{data_text}':{text_p.validate(data_text)}")
+    data_text = ["Hello", "Nexus", "World"]
+    print(f"Trying to validate input '42':{text_p.validate(42)}")
     text_p.ingest(data_text)
-    try:
-        text_p.ingest(1234)  # error because of int
-    except Exception as e:
-        print(f"Got Exception: {e}")
     text_p.output()
     text_p.output()
-
+    text_p.output()
     print("\n======= LogProcessor\n")
-    data = [{"login": "user123", "password": "password123"}, {"whats": "good"}]
-    print(f"validating '{data}':{log_p.validate(data)}")
+    data = [{'log_level': 'NOTICE', 'log_message': 'Connection to server'},
+            {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}]
+    print(f"Trying to validate input 'Hello': {log_p.validate("Hello")}")
     try:
         log_p.ingest(data)
     except Exception as e:
