@@ -18,7 +18,9 @@ class DataProcessor(ABC):
     def ingest(self, data: Any) -> None:
         if not self.validate(data):
             raise Exception(
-                "ERROR: Data is invalid. Please validate before ingestion.")
+                f"ERROR: '{data}' is invalid." +
+                "Please validate before ingestion."
+                )
 
     def output(self) -> tuple[int, str]:
         tuple_out = self.ingested_data[0]
@@ -104,10 +106,10 @@ if __name__ == "__main__":
     log_p = LogProcessor()
     print("\n======= NumericProcessor\n")
     print(f"Trying to validate input '42':{num_p.validate(42)}")
-    print(f"Trying to validate input 'Hello':{num_p.validate("Hello")}")
+    print(f"Trying to validate input 'Hello':{num_p.validate('Hello')}")
     nums = [1, 2, 3, 4, 5]
     try:
-        num_p.ingest("foo") # error because of str
+        num_p.ingest("foo")  # error because of str
     except Exception as e:
         print(f"Got Exception: {e}")
     num_p.ingest(nums)
@@ -124,7 +126,7 @@ if __name__ == "__main__":
     print("\n======= LogProcessor\n")
     data = [{'log_level': 'NOTICE', 'log_message': 'Connection to server'},
             {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}]
-    print(f"Trying to validate input 'Hello': {log_p.validate("Hello")}")
+    print(f"Trying to validate input 'Hello': {log_p.validate('Hello')}")
     try:
         log_p.ingest(data)
     except Exception as e:
