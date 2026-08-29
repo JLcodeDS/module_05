@@ -1,4 +1,4 @@
-#!/Library/Frameworks/Python.framework/Versions/3.12/bin/python3
+
 
 from abc import ABC, abstractmethod
 from typing import Any
